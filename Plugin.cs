@@ -9,12 +9,16 @@ namespace HeadGuard
         public static Plugin Singleton = null;
         public override void Enable()
         {
-            throw new NotImplementedException();
+            Singleton = this;
+            Singleton.Config.hG.MaxPlayersAllowed = Singleton.Config.MaxSpawn;
+            Singleton.Config.hG.MinPlayersRequired = Singleton.Config.MinPlayer;
+            Singleton.Config.hG.SpawnChance = Singleton.Config.ChanceSpawn;
+            NetRoleManager.NetRoleManager.Instance.RegisterRole(Singleton.Config.hG);
         }
 
         public override void Disable()
         {
-            throw new NotImplementedException();
+            Singleton = null;
         }
 
         public override string Name { get; } = "Head Guard";
@@ -30,6 +34,8 @@ namespace HeadGuard
         public int MinPlayer { get; set; } = 0;
         public int MaxSpawn { get; set; } = 1;
         public int maxhp { get; set; } = 90;
+
+        public Role hG = new Role();
 
     }
 }
